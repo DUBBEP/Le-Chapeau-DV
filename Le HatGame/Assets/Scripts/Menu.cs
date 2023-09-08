@@ -20,7 +20,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public TextMeshProUGUI playerListText;
     public Button startGameButton;
 
-    private void Start()
+    void Start()
     {
         // disable the buttons at the start as we'r enot connected to the server yet
         createRoomButton.interactable = false;

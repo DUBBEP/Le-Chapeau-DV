@@ -20,15 +20,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
         
     }
-    private void Start()
+    void Start()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        if(!PhotonNetwork.IsConnected)
+            PhotonNetwork.ConnectUsingSettings();
     }
 
     // attempts to CREATE a room
     public void CreateRoom (string roomName)
     {
         PhotonNetwork.CreateRoom(roomName);
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        Debug.Log("Connected to master server");
     }
 
     // attempts to JOIN a room
