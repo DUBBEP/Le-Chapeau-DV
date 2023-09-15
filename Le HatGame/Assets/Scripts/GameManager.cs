@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     [Header("Stats")]
     public bool gameEnded = false;
-    public float timeToWin;
+    public float TimeToDetonation;
     public float invincibleDuration;
     private float hatPickupTime;
 
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private int playersInGame;
 
     public static GameManager instance;
-
+    public GameObject explosion;
     private void Awake()
     {
         instance = this;
@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         players = new PlayerController[PhotonNetwork.PlayerList.Length];
         photonView.RPC("ImInGame", RpcTarget.AllBuffered);
-
     }
 
     [PunRPC]
@@ -68,6 +67,23 @@ public class GameManager : MonoBehaviourPunCallbacks
         return players.First(x => x.gameObject == playerObj);
     }
 
+    public int GetActivePlayer()
+    {
+        PlayerController player;
+        while (true)
+        {
+            for (int i = 0; i < players.Length; i++)
+            {
+                player = GetPlayer(players[i].id);
+                if (player.hasExploded == false)
+                {
+                    return players[i].id;
+                }
+            }
+            return 0;
+        }
+    }
+
     // called when a player hits the hatted player - giving them the hat
     [PunRPC]
     public void GiveHat (int playerId, bool initialGive)
@@ -90,7 +106,28 @@ public class GameManager : MonoBehaviourPunCallbacks
             return false;
     }
 
+    // When a player has reached max time eliminate them from the game
     [PunRPC]
+    void EliminatePlayer (int playerId)
+    {
+        Debug.Log("Eliminate player ran in Game Manager");
+        PlayerController player = GetPlayer(playerId);
+        player.hasExploded = true;
+        Object.Instantiate(explosion, player.gameObject.transform.position, Quaternion.identity);
+        player.transform.position = new Vector3(1000,0,1000);
+        playersInGame--;
+        if (playersInGame < 2)
+        {
+            //when the game has ended the only active player will be the winner
+            WinGame(GetActivePlayer());
+        }
+        else
+        {
+            //If more than 2 players remain randomly give one a hat
+            GiveHat(GetActivePlayer(), true);
+        }
+    }
+
     void WinGame (int playerId)
     {
         gameEnded = true;

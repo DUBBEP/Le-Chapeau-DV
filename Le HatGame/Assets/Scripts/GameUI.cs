@@ -41,7 +41,7 @@ public class GameUI : MonoBehaviour
             {
                 container.obj.SetActive(true);
                 container.nameText.text = PhotonNetwork.PlayerList[x].NickName;
-                container.hatTimeSlider.maxValue = GameManager.instance.timeToWin;
+                container.hatTimeSlider.maxValue = GameManager.instance.TimeToDetonation;
             }
             else
                 container.obj.SetActive(false);

@@ -18,11 +18,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        
     }
     void Start()
     {
-        if(!PhotonNetwork.IsConnected)
+        if (!PhotonNetwork.IsConnected)
             PhotonNetwork.ConnectUsingSettings();
     }
 

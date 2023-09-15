@@ -1,4 +1,4 @@
- using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     [HideInInspector]
     public float curHatTime;
+    public bool hasExploded;
 
     [Header("Components")]
     public Rigidbody rig;
@@ -23,8 +24,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     public void Initialize (Player player)
     {
+        hasExploded = false;
         photonPlayer = player;
         id = player.ActorNumber;
+
 
         GameManager.instance.players[id - 1] = this;
 
@@ -43,10 +46,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     {
         if(PhotonNetwork.IsMasterClient)
         {
-            if(curHatTime >= GameManager.instance.timeToWin && !GameManager.instance.gameEnded)
+            if(curHatTime >= GameManager.instance.TimeToDetonation && !hasExploded)
             {
-                GameManager.instance.gameEnded = true;
-                GameManager.instance.photonView.RPC("WinGame", RpcTarget.All, id);
+                hasExploded = true;
+                GameManager.instance.photonView.RPC("EliminatePlayer", RpcTarget.All, id);
+                Debug.Log("Eliminated Player through character controller");
             }
         }
 
