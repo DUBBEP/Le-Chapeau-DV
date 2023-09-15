@@ -1725,6 +1725,18 @@ MonoBehaviour:
   - {fileID: 1162221507}
   - {fileID: 1924272278}
   players: []
+  materials:
+  - {fileID: 2100000, guid: b35846a831d672245b6aca31b9342a9c, type: 2}
+  - {fileID: 2100000, guid: 65b95a12a2801944fbead8b75b908b26, type: 2}
+  - {fileID: 2100000, guid: 941d1ff8d6c31144586665953ed62408, type: 2}
+  - {fileID: 2100000, guid: 346f6c1849bdce84c84371f2630d4069, type: 2}
+  - {fileID: 2100000, guid: 946d33fad375e174e8b97ebcb43596da, type: 2}
+  - {fileID: 2100000, guid: 5dbfef206269d864fa91aeef6dc7dba5, type: 2}
+  - {fileID: 2100000, guid: 9995923731958c3439b58e21cb96f314, type: 2}
+  - {fileID: 2100000, guid: 5f469cf5888f7b147beec9b2dccdad16, type: 2}
+  - {fileID: 2100000, guid: df283a9f1211f9c4d84e967cf2c87d87, type: 2}
+  - {fileID: 2100000, guid: b7f5d1c764ee75a4aa349401cb74ffd3, type: 2}
+  - {fileID: 2100000, guid: ac56f7476385fd147b5b0a6c89b356a7, type: 2}
   playerWithHat: 0
   explosion: {fileID: 6448042511575666828, guid: 42d34a3aa32093d44ac6e9d68afa15c9, type: 3}
 --- !u!4 &1067875331

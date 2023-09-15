@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         photonPlayer = player;
         id = player.ActorNumber;
 
+        this.GetComponent<Renderer>().material = GameManager.instance.materials[Random.Range(0, GameManager.instance.materials.Length)];
+
 
         GameManager.instance.players[id - 1] = this;
 

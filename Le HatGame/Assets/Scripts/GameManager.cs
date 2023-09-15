@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public string playerPrefabLocation;
     public Transform[] spawnPoints;
     public PlayerController[] players;
+    public Material[] materials;
     public int playerWithHat;
     private int playersInGame;
 
