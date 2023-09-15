@@ -52,6 +52,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             {
                 hasExploded = true;
                 GameManager.instance.photonView.RPC("EliminatePlayer", RpcTarget.All, id);
+                if (GameManager.instance.playersInGame < 2)
+                    GameManager.instance.photonView.RPC("WinGame", RpcTarget.All);
+                else
+                    GameManager.instance.photonView.RPC("GiveHat", RpcTarget.All, GameManager.instance.GetActivePlayer(), false);
+
                 Debug.Log("Eliminated Player through character controller");
             }
         }

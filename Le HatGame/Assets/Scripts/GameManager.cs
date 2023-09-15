@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public PlayerController[] players;
     public Material[] materials;
     public int playerWithHat;
-    private int playersInGame;
+    public int playersInGame;
 
     public static GameManager instance;
     public GameObject explosion;
@@ -73,15 +73,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerController player;
         while (true)
         {
-            for (int i = 0; i < players.Length; i++)
+            player = GetPlayer(players[Random.Range(0, players.Length)].id);
+            if (player.hasExploded == false)
             {
-                player = GetPlayer(players[i].id);
-                if (player.hasExploded == false)
-                {
-                    return players[i].id;
-                }
+                return player.id;
             }
-            return 0;
         }
     }
 
@@ -117,20 +113,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         Object.Instantiate(explosion, player.gameObject.transform.position, Quaternion.identity);
         player.transform.position = new Vector3(1000,0,1000);
         playersInGame--;
-        if (playersInGame < 2)
-        {
-            //when the game has ended the only active player will be the winner
-            WinGame(GetActivePlayer());
-        }
-        else
-        {
-            //If more than 2 players remain randomly give one a hat
-            GiveHat(GetActivePlayer(), true);
-        }
     }
 
-    void WinGame (int playerId)
+    [PunRPC]
+    void WinGame ()
     {
+        int playerId = GetActivePlayer();
         gameEnded = true;
         PlayerController player = GetPlayer(playerId);
         GameUI.instance.SetWinText(player.photonPlayer.NickName);
